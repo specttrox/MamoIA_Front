@@ -13,6 +13,13 @@
     <div class="container">
         <!-- Seção esquerda: Título e imagem -->
         <div class="left-section">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %}
             <img src="{% static 'img/image01.png' %}" alt="Imagem Médica">
             <h2>Seu Laudo IA</h2>
             <p>{{ upload.report }}</p> <!-- Exibe o laudo da imagem -->
@@ -47,12 +54,6 @@
             <h2>Histórico de Uploads</h2>
             <ul>
                 {% for history in uploads %}
-                <li>
-                    Data de Upload: {{ history.upload_date }}<br>
-                    Tipo de Arquivo: {{ history.file_type }}<br>
-                    Laudo: {{ history.report }}<br>
-                    <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
-                </li>
                 <li>
                     Data de Upload: {{ history.upload_date }}<br>
                     Tipo de Arquivo: {{ history.file_type }}<br>
