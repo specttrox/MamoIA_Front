@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/global.css' %}?v={{STATIC_VERSION}}">
 </head>
+
 <body>
     <div class="container">
         <!-- Seção esquerda: Título e imagem -->
         <div class="left-section">
             <img src="{% static 'img/image01.png' %}" alt="Imagem Médica">
             <h2>Seu Laudo IA</h2>
-            <p>{{ upload.report }}</p>  <!-- Exibe o laudo da imagem -->
+            <p>{{ upload.report }}</p> <!-- Exibe o laudo da imagem -->
 
             <div class="image-preview">
                 <h3>Visualizar Imagem Anexada</h3>
@@ -33,29 +35,36 @@
                 <button type="submit">Enviar Laudo por Email</button>
             </form>
 
+            <form method="get" action="{% url 'upload_image' %}">
+                <button type="submit" style="margin-top: 15px; background-color: #ffdd57; color: #5f0a87; font-weight: bold;">
+                    Fazer Novo Upload
+                </button>
+            </form>
+
             <hr>
 
             <!-- Histórico de Uploads -->
             <h2>Histórico de Uploads</h2>
             <ul>
                 {% for history in uploads %}
-                    <li>
-                        Data de Upload: {{ history.upload_date }}<br>
-                        Tipo de Arquivo: {{ history.file_type }}<br>
-                        Laudo: {{ history.report }}<br>
-                        <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
-                    </li>
-                    <li>
-                        Data de Upload: {{ history.upload_date }}<br>
-                        Tipo de Arquivo: {{ history.file_type }}<br>
-                        Laudo: {{ history.report }}<br>
-                        <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
-                    </li>
+                <li>
+                    Data de Upload: {{ history.upload_date }}<br>
+                    Tipo de Arquivo: {{ history.file_type }}<br>
+                    Laudo: {{ history.report }}<br>
+                    <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
+                </li>
+                <li>
+                    Data de Upload: {{ history.upload_date }}<br>
+                    Tipo de Arquivo: {{ history.file_type }}<br>
+                    Laudo: {{ history.report }}<br>
+                    <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
+                </li>
                 {% empty %}
-                    <li>Você ainda não fez nenhum upload.</li>
+                <li>Você ainda não fez nenhum upload.</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
 </body>
+
 </html>
