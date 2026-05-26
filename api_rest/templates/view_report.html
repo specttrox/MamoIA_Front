@@ -7,63 +7,81 @@
     <title>Laudo da Imagem</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/global.css' %}?v={{STATIC_VERSION}}">
+    <style>
+        .container {
+            display: block !important;
+            /* Apaga a divisão de colunas */
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        .left-section {
+            width: 100% !important;
+            text-align: center;
+        }
+
+        /* Conserta a imagem dos médicos espremida */
+        .top-illustration {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        /* Organiza os botões lado a lado */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            margin: 0;
+            /* Remove margens do CSS antigo */
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Seção esquerda: Título e imagem -->
         <div class="left-section">
+
             {% if messages %}
-            <ul class="messages">
+            <ul class="messages" style="list-style: none; padding: 0;">
                 {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %} style="padding: 10px; border-radius: 5px; margin-bottom: 15px; font-weight: bold;">
+                    {{ message }}
+                    </li>
                     {% endfor %}
             </ul>
             {% endif %}
-            <img src="{% static 'img/image01.png' %}" alt="Imagem Médica">
+
+            <img src="{% static 'img/image01.png' %}" alt="Equipe Médica" class="top-illustration">
+
             <h2>Seu Laudo IA</h2>
-            <p>{{ upload.report }}</p> <!-- Exibe o laudo da imagem -->
-
-            <div class="image-preview">
+            <p>{{ upload.report }}</p>
+            <div class="image-preview" style="margin-top: 30px;">
                 <h3>Visualizar Imagem Anexada</h3>
-                <img src="{{ upload.file.url }}" alt="Imagem anexada" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <img src="{{ upload.file.url }}" alt="Imagem anexada" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             </div>
-        </div>
 
-        <!-- Seção direita: Botões e Histórico -->
-        <div class="right-section">
-            <!-- Botão para exportar o laudo em PDF -->
-            <form method="get" action="{% url 'export_pdf' upload.id %}">
-                <button type="submit">Exportar Laudo em PDF</button>
-            </form>
+            <div class="action-buttons">
+                <button type="button" onclick="window.print()">Exportar Laudo em PDF</button>
 
-            <!-- Botão para enviar o laudo por email -->
-            <form method="get" action="{% url 'send_email' upload.id %}">
-                <button type="submit">Enviar Laudo por Email</button>
-            </form>
+                <form method="get" action="{% url 'send_email' upload.id %}">
+                    <button type="submit">Enviar Laudo por Email</button>
+                </form>
 
-            <form method="get" action="{% url 'upload_image' %}">
-                <button type="submit" style="margin-top: 15px; background-color: #ffdd57; color: #5f0a87; font-weight: bold;">
-                    Fazer Novo Upload
-                </button>
-            </form>
+                <form method="get" action="{% url 'upload_image' %}">
+                    <button type="submit" style="background-color: #ffdd57; color: #5f0a87; font-weight: bold;">
+                        Fazer Novo Upload
+                    </button>
+                </form>
+            </div>
 
-            <hr>
-
-            <!-- Histórico de Uploads -->
-            <h2>Histórico de Uploads</h2>
-            <ul>
-                {% for history in uploads %}
-                <li>
-                    Data de Upload: {{ history.upload_date }}<br>
-                    Tipo de Arquivo: {{ history.file_type }}<br>
-                    Laudo: {{ history.report }}<br>
-                    <a href="{% url 'view_report' history.id %}">Ver Laudo</a>
-                </li>
-                {% empty %}
-                <li>Você ainda não fez nenhum upload.</li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </body>
