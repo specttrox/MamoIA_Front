@@ -8,6 +8,20 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/global.css' %}?v={{STATIC_VERSION}}">
     <style>
+        html {
+            height: auto !important;
+            min-height: 100%;
+            display: block !important;
+        }
+
+        body {
+            height: auto !important;
+            min-height: 100vh;
+            align-items: flex-start !important;
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+
         .container {
             display: block !important;
             /* Apaga a divisão de colunas */
