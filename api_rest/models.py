@@ -60,7 +60,7 @@ def upload_path(instance, filename):
 class MedicalImageUpload(models.Model):
     FILE_TYPES = [
         ("jpg", "Mamografia (JPG)"),
-        ("png", "Ultrassom (PNG)"),
+        ("png", "Imagem PNG"),
         ("jpeg", "Imagem JPEG"),
         ("dcm", "Imagem DICOM"),
     ]
@@ -87,7 +87,7 @@ class MedicalImageUpload(models.Model):
         if self.file_type == "jpg":
             self.report = "Laudo gerado automaticamente para a mamografia."
         elif self.file_type == "png":
-            self.report = "Laudo gerado automaticamente para o ultrassom."
+            self.report = "Laudo gerado automaticamente para imagem PNG."
         elif self.file_type == "dcm":
             self.report = "Laudo gerado automaticamente para imagem DICOM."
         else:
