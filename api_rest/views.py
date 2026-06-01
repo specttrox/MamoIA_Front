@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 from api_rest.models import User
 from django.http import HttpResponse
-from weasyprint import HTML
+# from weasyprint import HTML
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 
@@ -104,8 +104,8 @@ def view_report(request, upload_id):
 def export_pdf(request, upload_id):
     upload = MedicalImageUpload.objects.get(id=upload_id, user=request.user)
     html_string = render_to_string("view_report.html", {"upload": upload})
-    html = HTML(string=html_string)
-    pdf = html.write_pdf()
+    # html = HTML(string=html_string)
+    # pdf = html.write_pdf()
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="laudo_{upload_id}.pdf"'

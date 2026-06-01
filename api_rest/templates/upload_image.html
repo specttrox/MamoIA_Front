@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload de Imagem Médica</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/global.css' %}?v={{STATIC_VERSION}}">    
+    <link rel="stylesheet" href="{% static 'css/global.css' %}?v={{STATIC_VERSION}}">
 </head>
+
 <body>
     <div class="container">
         <!-- Seção esquerda: Título e imagem -->
@@ -28,7 +30,7 @@
                     <label for="file_type">Tipo de arquivo:</label>
                     <select id="file_type" name="file_type" required>
                         <option value="jpg">Mamografia</option>
-                        <option value="png">Ultrassom</option>
+                        <!-- <option value="png">Ultrassom</option> -->
                         <option value="pdf">Termografia</option>
                         <option value="pdf">Histopatologia</option>
                     </select>
@@ -40,11 +42,12 @@
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
             </ul>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
 </body>
+
 </html>
